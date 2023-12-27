@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+	<IteItemGroup></ItemGroup>
+		
+	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hospital.Repository\Hospital.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>
