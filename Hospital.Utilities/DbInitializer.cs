@@ -65,6 +65,10 @@ namespace Hospital.Utilities
 
 		}
 
+		public void Initili()
+		{
+			throw new NotImplementedException();
+		}
 	}
 
 
