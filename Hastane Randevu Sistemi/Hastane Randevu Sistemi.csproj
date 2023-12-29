@@ -7,6 +7,7 @@
     <RootNamespace>Hastane_Randevu_Sistemi</RootNamespace>
   </PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="cloudscribe.Web.Pagination" Version="6.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.23" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.23" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.23" />
@@ -20,10 +21,10 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Hospital.Repository\Hospital.Repositories.csproj" />
+	  <ProjectReference Include="..\Hospital.Services\Hospital.Services.csproj" />
 	  <ProjectReference Include="..\Hospital.Utilities\Hospital.Utilities.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Areas\Admin\Views\" />
 	  <Folder Include="Areas\Doctor\Controllers\" />
 	  <Folder Include="Areas\Doctor\Views\" />
 	</ItemGroup>

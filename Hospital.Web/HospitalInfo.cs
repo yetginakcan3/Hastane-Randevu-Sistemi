@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,10 @@ namespace Hospital.Models
 		public string City { get; set; }
 		public string PinCode { get; set; }
 		public string Country { get; set; }
+		[NotMapped]
 		public ICollection<Room> Rooms { get; set; }
-
+		[NotMapped]
 		public ICollection<Contact> Contacts { get; set; }
+		
 	}
 }

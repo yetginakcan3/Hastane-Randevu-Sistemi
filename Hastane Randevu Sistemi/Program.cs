@@ -5,6 +5,7 @@ using Hospital.Utilities;
 using Hospital.Repositories.Interfaces;
 using Hospital.Repositories.Implementation;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Hospital.Services;
 namespace Hastane_Randevu_Sistemi
 {
 	public class Program
@@ -24,7 +25,9 @@ namespace Hastane_Randevu_Sistemi
 			builder.Services.AddScoped<IDbInitializer,DbInitializer>();
 			builder.Services.AddTransient<IUnitOfWork,UnitOfWork>();
 			builder.Services.AddScoped<IEmailSender,EmailSender>();
-			builder.Services.AddRazorPages();
+			builder.Services.AddTransient<IHospitalInfo, HospitalInfoService>();
+            builder.Services.AddTransient<IRoomService, RoomService>();
+            builder.Services.AddRazorPages();
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -45,7 +48,7 @@ namespace Hastane_Randevu_Sistemi
 			app.MapRazorPages();
 			app.MapControllerRoute(
 				name: "default",
-				pattern: "{Area=Patient}/{controller=Home}/{action=Index}/{id?}");
+				pattern: "{Area=admin}/{controller=Hospitals}/{action=Index}/{id?}");
 
 			app.Run();
 			void DataSedding(){

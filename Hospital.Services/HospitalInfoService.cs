@@ -51,7 +51,7 @@ namespace Hospital.Services
 			{
 				Data = vmList,
 				TotalItems = totalCount,
-				PageNunber = pageNumber,
+				PageNumber = pageNumber,
 				PageSize = pageSize
 
 			};
