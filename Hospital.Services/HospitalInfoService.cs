@@ -4,6 +4,7 @@ using Hospital.Utilities;
 using Hospital.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,7 +59,12 @@ namespace Hospital.Services
 			return result;
 		}
 
-		public HospitalInfoViewModel GetHospitalById(int Hospitalid)
+        public IEnumerable GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HospitalInfoViewModel GetHospitalById(int Hospitalid)
 		{
 			var model= _unitOfWork.GenericRepository<HospitalInfo>().GetById(Hospitalid);
 			var vm = new HospitalInfoViewModel(model);

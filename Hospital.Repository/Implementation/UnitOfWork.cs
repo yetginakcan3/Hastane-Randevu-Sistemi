@@ -32,26 +32,18 @@ namespace Hospital.Repositories.Implementation
 				}
 			}
 
-			IGenericRepository<T> GenericRepository<T>() where T : class
-			{
-				IGenericRepository<T> repo = new GenericRepository<T>(_context);
-				return repo;
-			}
-
-			void Save()
-			{
-				_context.SaveChanges();
-			}
+		
 		}
 
-		public IGenericRepository<T> GenericRepository<T>() where T : class
-		{
-			throw new NotImplementedException();
-		}
+        public IGenericRepository<T> GenericRepository<T>() where T : class
+        {
+            IGenericRepository<T> repo = new GenericRepository<T>(_context);
+            return repo;
+        }
 
-		public void Save()
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+    }
 }

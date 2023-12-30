@@ -13,16 +13,35 @@ namespace Hospital.Repositories.Implementation
 	{
 		private readonly ApplicationDbContext _context;
 		internal DbSet<T> dbSet;
-		private ApplicationDbContext context;
+		
 
 		public GenericRepository(ApplicationDbContext context)
 		{
-			this.context = context;
+			_context=context;
+			dbSet=_context.Set<T>();
 		}
 
 		public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
 		{
-			throw new NotImplementedException();
+			IQueryable<T> query = dbSet;
+			if(filter != null)
+			{
+				query = query.Where(filter);
+			}
+			foreach(var includeProperty in includeProperties.Split(new char[] {','}, 
+				StringSplitOptions.RemoveEmptyEntries))
+			{
+				query=query.Include(includeProperty);
+			}
+
+			if(orderBy != null)
+			{
+				return orderBy(query).ToList();
+			}
+			else
+			{
+
+			}
 		}
 
 		public T GetById(object id)
@@ -37,13 +56,14 @@ namespace Hospital.Repositories.Implementation
 
 		public void Add(T entity)
 		{
-			throw new NotImplementedException();
+			dbSet.Add(entity);
 		}
 
-		public Task<T> AddAsync(T entity)
+		public async Task<T> AddAsync(T entity)
 		{
-			throw new NotImplementedException();
-		}
+            dbSet.Add(entity);
+			return entity;
+        }
 
 		public void Update(T entity)
 		{
@@ -57,17 +77,44 @@ namespace Hospital.Repositories.Implementation
 
 		public void Delete(T entity)
 		{
-			throw new NotImplementedException();
+			if(_context.Entry(entity).State== EntityState.Detached)
+			{
+				dbSet.Attach(entity);
+			}
+			dbSet.Remove(entity);
 		}
 
-		public Task DeleteAsync(T entity)
+		public async Task <T> DeleteAsync(T entity)
 		{
-			throw new NotImplementedException();
+			if(_context.Entry(entity).State == EntityState.Detached)
+			{
+				dbSet.Attach(entity);
+			}
+			return entity;
 		}
+		private bool disposed = false;
 
 		public void Dispose()
 		{
-			throw new NotImplementedException();
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
-	}
+
+		private void Dispose(bool disposing)
+		{
+			if (!this.disposed)
+			{
+				if (disposing)
+				{
+					_context.Dispose();
+				}
+			}
+			this.disposed = true;
+		}
+
+        public object GetAll(object value)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

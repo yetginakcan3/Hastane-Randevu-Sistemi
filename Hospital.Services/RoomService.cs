@@ -35,7 +35,7 @@ namespace Hospital.Services
             {
                 int ExcludeRecords = (pageSize * pageNumber) - pageSize;
 
-                var modelList = _unitOfWork.GenericRepository<Room>().GetAll().
+                var modelList = _unitOfWork.GenericRepository<Room>().GetAll(includeProperties:"Hospital").
                     Skip(ExcludeRecords).Take(pageSize).ToList();
                 totalCount = _unitOfWork.GenericRepository<Room>().GetAll().ToList().Count;
                 vmList = ConvertModelToViewModelList(modelList);
@@ -92,6 +92,36 @@ namespace Hospital.Services
         private List<RoomViewModel> ConvertModelToViewModelList(List<Room> modelList)
         {
             return modelList.Select(x=> new RoomViewModel(x)).ToList();
+        }
+
+        PagedResult<ContactViewModel> IRoomService.GetAll(int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ContactViewModel GetContactById(int ContactId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateContact(ContactViewModel contact)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertContact(ContactViewModel contact)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteContact(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        string? IRoomService.GetRoomById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

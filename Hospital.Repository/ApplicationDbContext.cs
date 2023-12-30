@@ -33,5 +33,18 @@ namespace Hospital.Repositories
 		public DbSet<Supplier> Suppliers { get; set; }
 		public DbSet<TestPrice> TestPrices { get; set; }
 
-	}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+			
+
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+        }
+
+
+    }
 }

@@ -1,5 +1,5 @@
 ﻿@using Hospital.Utilities
-@model PagedResult<Hospital.ViewModels.RoomViewModel>
+@model PagedResult<Hospital.ViewModels.ContactViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -17,13 +17,10 @@
                Id
             </th>
             <th>
-                RoomNumber
+               Email
             </th>
             <th>
-                Room type
-            </th>
-            <th>
-                Status
+               Phone NO
             </th>
             <th>
                hospital
@@ -38,16 +35,14 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoomNumber)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
+                @Html.DisplayFor(modelItem => item.Phone)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HospitalInfo.Name)
+                @Html.DisplayFor(modelItem => item.HospitalInfoId)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {id=item.Id }) |

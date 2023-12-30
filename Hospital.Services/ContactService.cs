@@ -33,7 +33,7 @@ namespace Hospital.Services
             try
             {
                 int ExcludeRecords = (pageSize * pageNumber) - pageSize;
-                var modelList = _unitOfWork.GenericRepository<Contact>().GetAll().
+                var modelList = _unitOfWork.GenericRepository<Contact>().GetAll(includeProperties:"Hospital").
                     Skip(ExcludeRecords).Take(pageSize).ToList();
 
                 totalCount = _unitOfWork.GenericRepository<Contact>().GetAll().ToList().Count;
@@ -83,6 +83,26 @@ namespace Hospital.Services
 
             _unitOfWork.GenericRepository<Contact>().Update(modelById);
             _unitOfWork.Save();
+        }
+
+        public string? GetRoomById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateRoom(RoomViewModel vm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertRoom(RoomViewModel vm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteRoom(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

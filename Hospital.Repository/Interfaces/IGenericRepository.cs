@@ -29,7 +29,8 @@ namespace Hospital.Repositories.Interfaces
 		void Delete(T entity);
 
 		Task DeleteAsync(T entity);
-	}
+        object GetAll(object value);
+    }
 	
 	
 }
