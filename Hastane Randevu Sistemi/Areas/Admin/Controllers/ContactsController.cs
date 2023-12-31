@@ -9,10 +9,10 @@ namespace Hastane_Randevu_Sistemi.Areas.Admin.Controllers
     [Area("admin")]
     public class ContactController : Controller
     {
-        private IRoomService _contact;
+        private IContactService _contact;
         private IHospitalInfo _hospitalInfo;
 
-        public ContactController(IRoomService contact,IHospitalInfo hospitalInfo)
+        public ContactController(IContactService contact,IHospitalInfo hospitalInfo)
         {
             _contact = contact;
             _hospitalInfo = hospitalInfo;
@@ -33,7 +33,7 @@ namespace Hastane_Randevu_Sistemi.Areas.Admin.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Edit(ContactViewModel vm) 
+        public IActionResult Edit(ApplicationUserViewModel vm) 
         {
             _contact.UpdateContact(vm);
             return RedirectToAction("Index");
@@ -51,7 +51,7 @@ namespace Hastane_Randevu_Sistemi.Areas.Admin.Controllers
 
         [HttpPost]
 
-        public IActionResult Create(ContactViewModel vm) 
+        public IActionResult Create(ApplicationUserViewModel vm) 
         {
         _contact.InsertContact(vm);
             return RedirectToAction("Index");

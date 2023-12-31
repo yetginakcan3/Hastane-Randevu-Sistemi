@@ -21,7 +21,9 @@ namespace Hospital.Repositories.Implementation
 			dbSet=_context.Set<T>();
 		}
 
-		public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+		public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null,
+			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+			string includeProperties = "")
 		{
 			IQueryable<T> query = dbSet;
 			if(filter != null)
@@ -40,18 +42,19 @@ namespace Hospital.Repositories.Implementation
 			}
 			else
 			{
-
+                return query.ToList();
+					 
 			}
 		}
 
 		public T GetById(object id)
 		{
-			throw new NotImplementedException();
+			return dbSet.Find(id);
 		}
 
-		public Task<T> GetByIdAsync(object id)
+		public async Task<T> GetByIdAsync(object id)
 		{
-			throw new NotImplementedException();
+			return await dbSet.FindAsync(id);
 		}
 
 		public void Add(T entity)
@@ -67,13 +70,16 @@ namespace Hospital.Repositories.Implementation
 
 		public void Update(T entity)
 		{
-			throw new NotImplementedException();
+			dbSet.Attach(entity);
+			_context.Entry(entity).State = EntityState.Modified;
 		}
 
-		public Task UpdateAsync(T entity)
+		public async Task <T> UpdateAsync(T entity)
 		{
-			throw new NotImplementedException();
-		}
+            dbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+			return entity;
+        }
 
 		public void Delete(T entity)
 		{
@@ -81,6 +87,7 @@ namespace Hospital.Repositories.Implementation
 			{
 				dbSet.Attach(entity);
 			}
+			
 			dbSet.Remove(entity);
 		}
 
@@ -90,6 +97,7 @@ namespace Hospital.Repositories.Implementation
 			{
 				dbSet.Attach(entity);
 			}
+			dbSet.Remove(entity);
 			return entity;
 		}
 		private bool disposed = false;
@@ -112,9 +120,6 @@ namespace Hospital.Repositories.Implementation
 			this.disposed = true;
 		}
 
-        public object GetAll(object value)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

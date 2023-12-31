@@ -10,12 +10,11 @@ namespace Hospital.Services
 {
     public interface IRoomService
     {
-        PagedResult<ContactViewModel>GetAll(int pageNumber,  int pageSize);
-        ContactViewModel GetContactById(int ContactId);
-        void UpdateContact (ContactViewModel contact);
-        void InsertContact (ContactViewModel contact);
-        void DeleteContact (int id);
-        string? GetRoomById(int id);
+        PagedResult<RoomViewModel>GetAll(int pageNumber,  int pageSize);
+        RoomViewModel GetRoomById(int RoomId);
+        
+        
+       
         void UpdateRoom(RoomViewModel vm);
         void InsertRoom(RoomViewModel vm);
         void DeleteRoom(int id);

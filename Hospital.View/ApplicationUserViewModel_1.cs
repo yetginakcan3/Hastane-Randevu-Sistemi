@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace Hospital.ViewModels
 {
-    public class ContactViewModel
+    public class ApplicationUserViewModel
     {
         public int Id { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public int HospitalInfoId { get; set; }
 
-        public ContactViewModel()
+        public ApplicationUserViewModel()
         {
 
         }
 
-        public ContactViewModel(Contact model)
+        public ApplicationUserViewModel(ApplicationUser model)
         {
 
             Id = model.Id;
@@ -29,9 +29,9 @@ namespace Hospital.ViewModels
             
         }
 
-        public Contact ConvertViewModel(ContactViewModel model)
+        public ApplicationUser ConvertViewModel(ApplicationUserViewModel model)
         {
-            return new Contact
+            return new ApplicationUser
             {
 
                 Id = model.Id,

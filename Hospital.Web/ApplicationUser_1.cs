@@ -1,6 +1,6 @@
 ﻿namespace Hospital.Models
 {
-	public class Contact
+	public class ApplicationUser
 	{
 		public int Id { get; set; }
 		public int HospitalId { get; set; }

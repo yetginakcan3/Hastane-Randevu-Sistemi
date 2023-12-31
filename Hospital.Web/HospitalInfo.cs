@@ -19,7 +19,7 @@ namespace Hospital.Models
 		[NotMapped]
 		public ICollection<Room> Rooms { get; set; }
 		[NotMapped]
-		public ICollection<Contact> Contacts { get; set; }
+		public ICollection<ApplicationUser> Contacts { get; set; }
 		
 	}
 }

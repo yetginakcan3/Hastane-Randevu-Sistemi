@@ -94,34 +94,6 @@ namespace Hospital.Services
             return modelList.Select(x=> new RoomViewModel(x)).ToList();
         }
 
-        PagedResult<ContactViewModel> IRoomService.GetAll(int pageNumber, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ContactViewModel GetContactById(int ContactId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateContact(ContactViewModel contact)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertContact(ContactViewModel contact)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteContact(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        string? IRoomService.GetRoomById(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

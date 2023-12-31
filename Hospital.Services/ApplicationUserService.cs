@@ -2,6 +2,7 @@
 using Hospital.Repositories.Interfaces;
 using Hospital.Utilities;
 using Hospital.ViewModels;
+using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +11,17 @@ using System.Threading.Tasks;
 
 namespace Hospital.Services
 {
-    public class ContactService : IContactService
+    public class ApplicationUserService : IApplicationUserService
+
     {
         private IUnitOfWork _unitOfWork;
 
-        public ContactService(IUnitOfWork unitOfWork)
+        public ApplicationUserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public void DeleteContact(int id)
-        {
-            var model = _unitOfWork.GenericRepository<ApplicationUser>().GetById(id);
-            _unitOfWork.GenericRepository<ApplicationUser>().Delete(model);
-            _unitOfWork.Save();
-        }
+
+       
 
         public PagedResult<ApplicationUserViewModel> GetAll(int pageNumber, int pageSize)
         {
@@ -33,7 +31,7 @@ namespace Hospital.Services
             try
             {
                 int ExcludeRecords = (pageSize * pageNumber) - pageSize;
-                var modelList = _unitOfWork.GenericRepository<ApplicationUser>().GetAll(includeProperties:"Hospital").
+                var modelList = _unitOfWork.GenericRepository<ApplicationUser>().GetAll(includeProperties: "Hospital").
                     Skip(ExcludeRecords).Take(pageSize).ToList();
 
 
@@ -41,7 +39,7 @@ namespace Hospital.Services
 
                 vmList = ConvertModelToViewModelList(modelList);
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }
@@ -69,7 +67,7 @@ namespace Hospital.Services
 
         public void InsertContact(ApplicationUserViewModel Contact)
         {
-           var model = new ApplicationUserViewModel().ConvertViewModel(Contact);
+            var model = new ApplicationUserViewModel().ConvertViewModel(Contact);
             _unitOfWork.GenericRepository<ApplicationUser>().Add(model);
             _unitOfWork.Save();
         }
@@ -89,12 +87,16 @@ namespace Hospital.Services
         private List<ApplicationUserViewModel> ConvertModelToViewModelList(List<ApplicationUser> modelList)
         {
             return modelList.Select(x => new ApplicationUserViewModel(x)).ToList();
+
+
+            private List<ApplicationUserViewModel> ConvertModelToViewModelList(List<ApplicationUser> modelList)
+        {
+            return modelList.Select(x=>new ApplicationUserViewModel(x)).ToList();
         }
-
-
-
-
-
-
     }
-}
+
+        string? IApplicationUserService.GetAll(int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+    }

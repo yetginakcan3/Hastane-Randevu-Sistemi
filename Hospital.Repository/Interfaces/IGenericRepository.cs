@@ -24,12 +24,12 @@ namespace Hospital.Repositories.Interfaces
 
 		void Update(T entity);
 
-		Task UpdateAsync(T entity);
+		Task<T> UpdateAsync(T entity);
 
 		void Delete(T entity);
 
-		Task DeleteAsync(T entity);
-        object GetAll(object value);
+		Task<T> DeleteAsync(T entity);
+       
     }
 	
 	
