@@ -1,45 +1,52 @@
 ﻿using Hospital.Models;
 using System;
 using System.Collections.Generic;
+
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hospital.ViewModels
 {
-    public class ApplicationUserViewModel
+    public class ContactViewModel
     {
         public int Id { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public int HospitalInfoId { get; set; }
 
-        public ApplicationUserViewModel()
+        public ContactViewModel()
         {
 
         }
 
-        public ApplicationUserViewModel(ApplicationUser model)
+        public ContactViewModel(Contact model)
         {
-
             Id = model.Id;
-            Phone = model.Phone;
             Email = model.Email;
+            Phone = model.Phone;
             HospitalInfoId = model.HospitalId;
-            
         }
 
-        public ApplicationUser ConvertViewModel(ApplicationUserViewModel model)
+
+
+        public Contact ConvertViewModel(ContactViewModel model)
         {
-            return new ApplicationUser
+            return new Contact
             {
-
                 Id = model.Id,
-                Phone = model.Phone,
                 Email = model.Email,
-                HospitalId = model.HospitalInfoId,
+                Phone = model.Phone,
+                HospitalId = model.HospitalInfoId
             };
-        }
+
+
 
     }
+       
+
+    }
+
+   
 }

@@ -10,12 +10,13 @@ namespace Hospital.Services
 {
     public interface IContactService
     {
-        PagedResult<ApplicationUserViewModel> GetAll(int pageNumber, int pageSize);
+        PagedResult<ContactViewModel> GetAll(int pageNumber, int pageSize);
 
-        ApplicationUserViewModel GetContactById(int Contactid);
+        ContactViewModel GetContactById(int ContactId);
       
-        void InsertContact(ApplicationUserViewModel vm);
-        void UpdateContact(ApplicationUserViewModel vm);
+        void InsertContact(ContactViewModel contact);
+        void UpdateContact(ContactViewModel contact);
         void DeleteContact(int id);
     }
 }
+

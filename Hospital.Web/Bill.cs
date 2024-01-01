@@ -4,7 +4,7 @@
 	{
 		public int Id { get; set; }
 		public int BillNumber { get; set; }
-		public ApplicationUser Patient { get; set; }
+		public Contact Patient { get; set; }
 		public Insurance Insurance { get; set; }
 		public int DoctorCharge { get; set; }
 		public decimal MedicineCharge { get; set; }

@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
+
 namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
 {
     public class DoctorRegisterModel : PageModel
@@ -124,7 +125,7 @@ namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                ApplicationUser user = (ApplicationUser)CreateUser();
+                var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -133,7 +134,7 @@ namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
                 user.Address = Input.Address;
                 user.Nationality = Input.Nationality;
                 user.DOB= Input.DOB;
-                user.Gender = Input.Gender;
+                
                 user.IsDoctor = Input.IsDoctor;
                 user.Specialist = Input.Specialist;
                 ImageOperations image = new ImageOperations(_env);
@@ -179,11 +180,11 @@ namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {

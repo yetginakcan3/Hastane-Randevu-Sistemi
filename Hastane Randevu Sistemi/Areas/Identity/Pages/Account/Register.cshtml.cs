@@ -112,7 +112,7 @@ namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
 
 
         }
-
+        
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -126,29 +126,30 @@ namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var User = CreateUser();
+               
 
-                user.Name = Input.Name;
-                user.Address = Input.Address;
-                user.Nationality = Input.Nationality;
-                user.DOB = Input.DOB;
-                user.Gender = Input.Gender;
+                User.Name = Input.Name;
+                User.Address = Input.Address;
+                User.Nationality = Input.Nationality;
+                User.DOB = Input.DOB;
+                
                 
                 ImageOperations image = new ImageOperations(_webHostEnvironment);
                 string filename = image.ImageUpload(Input.PictureUri);
-                user.PictureUri = filename;
+                User.PictureUri = filename;
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userStore.SetUserNameAsync(User, Input.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(User, Input.Email, CancellationToken.None);
+                var result = await _userManager.CreateAsync(User, Input.Password);
                 
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    await _userManager.AddToRoleAsync(user, WebSiteRoles.WebSite_Patient);
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await _userManager.AddToRoleAsync(User, WebSiteRoles.WebSite_Patient);
+                    var userId = await _userManager.GetUserIdAsync(User);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(User);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
@@ -165,7 +166,7 @@ namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        await _signInManager.SignInAsync(User, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }
@@ -181,6 +182,9 @@ namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
 
         private ApplicationUser CreateUser()
         {
+            
+            
+        
             try
             {
                 return Activator.CreateInstance<ApplicationUser>();
@@ -201,5 +205,9 @@ namespace Hastane_Randevu_Sistemi.Areas.Identity.Pages.Account
             }
             return (IUserEmailStore<IdentityUser>)_userStore;
         }
+    }
+
+    public class Gender
+    {
     }
 }

@@ -20,24 +20,24 @@ namespace Hospital.Services
         }
         public void DeleteContact(int id)
         {
-            var model = _unitOfWork.GenericRepository<ApplicationUser>().GetById(id);
-            _unitOfWork.GenericRepository<ApplicationUser>().Delete(model);
+            var model = _unitOfWork.GenericRepository<Contact>().GetById(id);
+            _unitOfWork.GenericRepository<Contact>().Delete(model);
             _unitOfWork.Save();
         }
 
-        public PagedResult<ApplicationUserViewModel> GetAll(int pageNumber, int pageSize)
+        public PagedResult<ContactViewModel> GetAll(int pageNumber, int pageSize)
         {
-            var vm = new ApplicationUserViewModel();
+            var vm = new ContactViewModel();
             int totalCount;
-            List<ApplicationUserViewModel> vmList = new List<ApplicationUserViewModel>();
+            List<ContactViewModel> vmList = new List<ContactViewModel>();
             try
             {
                 int ExcludeRecords = (pageSize * pageNumber) - pageSize;
-                var modelList = _unitOfWork.GenericRepository<ApplicationUser>().GetAll(includeProperties:"Hospital").
+                var modelList = _unitOfWork.GenericRepository<Contact>().GetAll().
                     Skip(ExcludeRecords).Take(pageSize).ToList();
 
 
-                totalCount = _unitOfWork.GenericRepository<ApplicationUser>().GetAll().ToList().Count;
+                totalCount = _unitOfWork.GenericRepository<Contact>().GetAll().ToList().Count;
 
                 vmList = ConvertModelToViewModelList(modelList);
             }
@@ -45,7 +45,7 @@ namespace Hospital.Services
             {
                 throw;
             }
-            var result = new PagedResult<ApplicationUserViewModel>
+            var result = new PagedResult<ContactViewModel>
             {
                 Data = vmList,
                 TotalItems = totalCount,
@@ -55,46 +55,38 @@ namespace Hospital.Services
             return result;
         }
 
-        private List<ApplicationUserViewModel> ConvertModelToViewModelList(List<ApplicationUser> modelList)
+        private List<ContactViewModel> ConvertModelToViewModelList(List<Contact> modelList)
         {
-            throw new NotImplementedException();
+            return modelList.Select(x => new ContactViewModel(x)).ToList();
         }
 
-        public ApplicationUserViewModel GetContactById(int ContactId)
+        public ContactViewModel GetContactById(int ContactId)
         {
-            var model = _unitOfWork.GenericRepository<ApplicationUser>().GetById(ContactId);
-            var vm = new ApplicationUserViewModel(model);
+            var model = _unitOfWork.GenericRepository<Contact>().GetById(ContactId);
+            var vm = new ContactViewModel(model);
             return vm;
         }
 
-        public void InsertContact(ApplicationUserViewModel Contact)
+        public void InsertContact(ContactViewModel Contact)
         {
-           var model = new ApplicationUserViewModel().ConvertViewModel(Contact);
-            _unitOfWork.GenericRepository<ApplicationUser>().Add(model);
+           var model = new ContactViewModel().ConvertViewModel(Contact);
+            _unitOfWork.GenericRepository<Contact>().Add(model);
             _unitOfWork.Save();
         }
 
-        public void UpdateContact(ApplicationUserViewModel contact)
+        public void UpdateContact(ContactViewModel contact)
         {
-            var model = new ApplicationUserViewModel().ConvertViewModel(contact);
-            var modelById = _unitOfWork.GenericRepository<ApplicationUser>().GetById(model.Id);
+            var model = new ContactViewModel().ConvertViewModel(contact);
+            var modelById = _unitOfWork.GenericRepository<Contact>().GetById(model.Id);
             modelById.Phone = contact.Phone;
             modelById.Email = contact.Email;
             modelById.HospitalId = contact.HospitalInfoId;
 
-            _unitOfWork.GenericRepository<ApplicationUser>().Update(modelById);
+            _unitOfWork.GenericRepository<Contact>().Update(modelById);
             _unitOfWork.Save();
         }
 
-        private List<ApplicationUserViewModel> ConvertModelToViewModelList(List<ApplicationUser> modelList)
-        {
-            return modelList.Select(x => new ApplicationUserViewModel(x)).ToList();
-        }
-
-
-
-
-
+       
 
     }
 }

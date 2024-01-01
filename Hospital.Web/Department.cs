@@ -13,6 +13,6 @@ namespace Hospital.Models
 		public string Name { get; set; }
 		public string Description { get; set; }
 		[NotMapped]
-		public ICollection<ApplicationUser> Employees { get; set; }
+		public ICollection<Contact> Employees { get; set; }
 	}
 }

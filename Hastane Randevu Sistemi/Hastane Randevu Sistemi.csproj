@@ -24,9 +24,5 @@
 	  <ProjectReference Include="..\Hospital.Services\Hospital.Services.csproj" />
 	  <ProjectReference Include="..\Hospital.Utilities\Hospital.Utilities.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Areas\Doctor\Controllers\" />
-	  <Folder Include="Areas\Doctor\Views\" />
-	</ItemGroup>
 
 </Project>

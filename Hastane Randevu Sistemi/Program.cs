@@ -6,6 +6,11 @@ using Hospital.Repositories.Interfaces;
 using Hospital.Repositories.Implementation;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Hospital.Services;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using System.Reflection;
+using WebApplication3.Services;
+using Microsoft.Extensions.Options;
 namespace Hastane_Randevu_Sistemi
 {
 	public class Program
@@ -14,8 +19,33 @@ namespace Hastane_Randevu_Sistemi
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
-			// Add services to the container.
-			builder.Services.AddControllersWithViews();
+            #region Localizer
+            builder.Services.AddSingleton<LanguageService>();
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+            builder.Services.AddMvc().AddViewLocalization().AddDataAnnotationsLocalization(options =>
+                options.DataAnnotationLocalizerProvider = (type, factory) =>
+                {
+                    var assemblyName = new AssemblyName(typeof(SharedResource).GetTypeInfo().Assembly.FullName);
+                    return factory.Create(nameof(SharedResource), assemblyName.Name);
+                });
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportCultures = new List<CultureInfo>
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("fr-FR"),
+        new CultureInfo("tr-TR"),
+    };
+                options.DefaultRequestCulture = new RequestCulture(culture: "tr-TR", uiCulture: "tr-TR");
+                options.SupportedCultures = supportCultures;
+                options.SupportedUICultures = supportCultures;
+                options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
+            });
+            #endregion
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
 			builder.Services.AddDbContext<ApplicationDbContext>(options=>
 			options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -26,6 +56,7 @@ namespace Hastane_Randevu_Sistemi
 			builder.Services.AddTransient<IUnitOfWork,UnitOfWork>();
 			builder.Services.AddScoped<IEmailSender,EmailSender>();
 			builder.Services.AddTransient<IHospitalInfo, HospitalInfoService>();
+			builder.Services.AddTransient<IDoctorService, DoctorService>();
             builder.Services.AddTransient<IRoomService, RoomService>();
             builder.Services.AddTransient<IContactService, ContactService>();
             builder.Services.AddTransient<IApplicationUserService, ApplicationUserService>();
@@ -44,7 +75,8 @@ namespace Hastane_Randevu_Sistemi
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			DataSedding();
-			app.UseRouting();
+            app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
+            app.UseRouting();
                app.UseAuthentication();;
 
 			app.UseAuthorization();

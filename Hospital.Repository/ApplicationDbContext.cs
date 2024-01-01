@@ -21,7 +21,7 @@ namespace Hospital.Repositories
 		public DbSet<Appointment> Appointments { get; set; }
 
 		//public DbSet<Bill> Bills { get; set; }
-		public DbSet<ApplicationUser> Contacts { get; set; }
+		public DbSet<Contact> Contacts { get; set; }
 		//public DbSet<Department> Departments { get; set; }
 
 		public DbSet<HospitalInfo> Hospitals { get; set; }

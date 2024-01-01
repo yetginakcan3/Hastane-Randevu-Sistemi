@@ -3,7 +3,7 @@
 	public class Payroll
 	{
 		public int Id { get; set; }
-		public ApplicationUser EmployeeId { get; set; }
+		public Contact EmployeeId { get; set; }
 		public decimal Salary { get; set; }
 		public decimal NetSalary { get; set; }
 		public decimal HourlySalary  { get; set; }

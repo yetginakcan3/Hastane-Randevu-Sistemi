@@ -33,7 +33,7 @@ namespace Hastane_Randevu_Sistemi.Areas.Admin.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Edit(ApplicationUserViewModel vm) 
+        public IActionResult Edit(ContactViewModel vm) 
         {
             _contact.UpdateContact(vm);
             return RedirectToAction("Index");
@@ -51,7 +51,7 @@ namespace Hastane_Randevu_Sistemi.Areas.Admin.Controllers
 
         [HttpPost]
 
-        public IActionResult Create(ApplicationUserViewModel vm) 
+        public IActionResult Create(ContactViewModel vm) 
         {
         _contact.InsertContact(vm);
             return RedirectToAction("Index");

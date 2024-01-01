@@ -1,6 +1,8 @@
 ﻿using Hastane_Randevu_Sistemi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Localization;
+using WebApplication3.Services;
 
 namespace Hastane_Randevu_Sistemi.Controllers
 {
@@ -8,17 +10,30 @@ namespace Hastane_Randevu_Sistemi.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}
+        private LanguageService _localization;
+        public HomeController(ILogger<HomeController> logger, LanguageService localization)
+        {
+            _logger = logger;
+            _localization = localization;
+        }
 
-		public IActionResult Index()
+        public IActionResult Index()
 		{
-			return View();
-		}
+            ViewBag.Welcome = _localization.Getkey("Welcome").Value;
+            var currentCulture = Thread.CurrentThread.CurrentCulture.Name;
+            return View();
+        }
 
-		public IActionResult Privacy()
+        public IActionResult ChangeLanguage(string culture)
+        {
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)), new CookieOptions()
+                {
+                    Expires = DateTimeOffset.UtcNow.AddYears(1)
+                });
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+            public IActionResult Privacy()
 		{
 			return View();
 		}

@@ -8,5 +8,7 @@
 		public string Status { get; set; }
 		public int HospitalId { get; set; }
 		public HospitalInfo Hospital { get; set; }
-	}
+        public object HospitalInfo { get; set; }
+        public object HospitalInfoId { get; set; }
+    }
 }

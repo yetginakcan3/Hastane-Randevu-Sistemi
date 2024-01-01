@@ -8,8 +8,8 @@
 
 		public DateTime CreatedDate { get; set; }
 		public string Description { get; set; }
-	    public ApplicationUser Doctor { get; set; }
-		public ApplicationUser Patient { get; set; }
+	    public Contact Doctor { get; set; }
+		public Contact Patient { get; set; }
 
 
 		
